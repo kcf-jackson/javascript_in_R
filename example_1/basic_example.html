@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+    <style type="text/css">
+      body { font-family: Helvetica; }
+      pre { margin: 0 }
+    </style>
+      <script>
+      ws.onmessage = function(msg) {
+        var msgDiv = document.createElement("pre");
+        msgDiv.innerHTML = msg.data.replace(/&/g, "&amp;").replace(/\</g, "&lt;");
+        document.getElementById("output").appendChild(msgDiv);
+      }
+    function showValue() {
+      var input = document.getElementById("slide_input");
+      ws.send(input.value);
+    }
+    </script>
+      </head>
+      <body>
+      <h3>Send Message</h3>
+      <form action onsubmit="sendInput(); return false">
+      <input type="range" id="slide_input" min="0" max="100" oninput="showValue(this.value)"/>
+      <h3>Received</h3>
+      <div id="output"></div>
+      </form>
+      </body>
+      </html>
+      

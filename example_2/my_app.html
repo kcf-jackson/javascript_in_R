@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style type="text/css">
+    body { font-family: Helvetica; }
+    pre { margin: 0 }
+    .column {
+      float: left;
+    }
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+    </style>
+    <script>
+      ws.onmessage = function(msg) {
+        var msgDiv = document.createElement("pre");
+        msgDiv.innerHTML = msg.data.replace(/&/g, "&amp;").replace(/\</g, "&lt;");
+        document.getElementById("output").appendChild(msgDiv);
+        console.log(msg);
+        var data0 = JSON.parse(msg.data);
+        console.log(data0['y'][0]);
+        var trace1 = {
+          x: [data0['x'][0]], 
+          y: [data0['y'][0]], 
+          mode: 'markers', 
+          type: 'scatter'
+        };
+        var layout = {xaxis:{range: [-10, 10]}, yaxis: {range: [-20, 120]}};
+        Plotly.newPlot('myDiv', [trace1], layout);
+      }
+      function showValue() {
+        var input = document.getElementById("slide_input");
+        ws.send(input.value);
+      }
+    </script>
+  </head>
+  <body>
+    <div class = 'row'>
+      <div class = 'column'>
+      <h3>Send Message</h3>
+      <form action onsubmit="sendInput(); return false">
+          <input type="range" id="slide_input" min="0" max="100" oninput="showValue(this.value)"/>
+        <h3>Received</h3>
+        <div id="output"></div>
+      </form>
+      </div>
+      <div class = 'column' id="myDiv"><!-- Plotly chart --></div>
+    </div>
+  </body>
+</html>
