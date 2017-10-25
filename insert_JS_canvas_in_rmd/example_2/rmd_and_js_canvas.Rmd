@@ -1,0 +1,29 @@
+---
+title: "Embed JS app in Rmarkdown"
+author: "Jackson Kwok"
+date: "16/07/2017"
+output: 
+  html_document:
+    includes:
+       in_header: myheader.html
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+Some content here
+
+## My Javascript app here
+
+<div> <canvas id='someId'></canvas> </div>
+<script src = 'test.js'></script>
+
+## Game of life JS app
+
+source: [Game of life](https://p5js.org/examples/simulate-game-of-life.html)
+
+<div id = 'someId_two'> </div>
+<script src = 'game_of_life.js'></script>
